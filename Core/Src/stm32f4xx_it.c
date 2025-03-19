@@ -57,7 +57,8 @@
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim6;
 /* USER CODE BEGIN EV */
-
+/// Khai báo biến toàn cục, nhưng cho biết biến này đã được khởi tạo ở một file .c khác, không cần khởi tạo mới
+extern time6_count;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -200,10 +201,20 @@ void SysTick_Handler(void)
 
 /**
   * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
+  * @description
+  * 	Hàm được gọi ra định kỳ với tần số 10 KHz như đã cấu hình. Noi cách khác là chu kì 0.1ms
   */
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+	// Ghi nhận 1 chu kì thời gian mới đã trôi qua.
+	time6_count++;
+	if (time6_count == 4999 ) {
+		// Nếu đã 0.5 giây trôi qua, thì đặt lại bộ đếm về 0 để đếm lại từ đầu.
+		time6_count = 0;
+		/// Đảo giá trị của led ở chân PG14
+		HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_14);
+	}
 
   /* USER CODE END TIM6_DAC_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);

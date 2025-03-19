@@ -43,7 +43,11 @@
 TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN PV */
-
+/// @brief Bộ đếm, +1 mỗi khi một ngắt xảy ra.
+/// @description  Như đã cấu hình, tim6 sẽ gọi hàm phục vụ ngắt theo tần số 10 KHz
+///               vì vậy, để có chu kì 1 giây, cần đếm đủ 5000 chu kì x 2 để tạo
+///               ra chu kì 1 giây
+int time6_count;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,6 +94,9 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+
+  // Bắt đầu cho timer6 chạy Lúc này bộ counter của timer bắt đầu hoạt động
+  HAL_TIM_Base_Start_IT(&htim6);
 
   /* USER CODE END 2 */
 
