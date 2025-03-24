@@ -1,9 +1,9 @@
-# EMBEDED SYSTEM / HỆ NHÚNG: Kit STM32F429 - và ngắt thời gian
+# EMBEDED SYSTEM / HỆ NHÚNG: Kit STM32F429 - và sự kiện ngắt do bấm nút
 
 ## Mục tiêu
 
-Làm đèn led có sẵn trên board tắt bật theo chu kì 1 giây
+Kích hoạt sự kiện ngắt đối với nút bấm, và viết chương trình con phục vụ ngắt: nháy đèn led theo sườn lên/xuống của sự kiện
 
 ## Video
 
-[![image](https://github.com/user-attachments/assets/1cd74521-6e69-4ed6-8ae6-8861cf1278dc)](https://youtu.be/iNICh5uWPAE)
+[![image](https://github.com/user-attachments/assets/25b9d283-e5b0-4eca-aae5-62835768061d)](https://youtu.be/mOu6zec9Ezk)
