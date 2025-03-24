@@ -201,8 +201,6 @@ void SysTick_Handler(void)
 
 /**
   * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
-  * @description
-  * 	Hàm được gọi ra định kỳ với tần số 10 KHz như đã cấu hình. Noi cách khác là chu kì 0.1ms
   */
 void TIM6_DAC_IRQHandler(void)
 {
@@ -213,7 +211,7 @@ void TIM6_DAC_IRQHandler(void)
 		// Nếu đã 0.5 giây trôi qua, thì đặt lại bộ đếm về 0 để đếm lại từ đầu.
 		time6_count = 0;
 		/// Đảo giá trị của led ở chân PG14
-		HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_14);
+		HAL_GPIO_TogglePin(GPIOG, LD4_Pin);
 	}
 
   /* USER CODE END TIM6_DAC_IRQn 0 */
