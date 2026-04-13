@@ -58,7 +58,7 @@
 extern TIM_HandleTypeDef htim6;
 /* USER CODE BEGIN EV */
 /// Khai báo biến toàn cục, nhưng cho biết biến này đã được khởi tạo ở một file .c khác, không cần khởi tạo mới
-extern time6_count;
+extern int time6_count;
 /* USER CODE END EV */
 
 /******************************************************************************/
