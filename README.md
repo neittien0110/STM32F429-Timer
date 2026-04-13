@@ -1,8 +1,11 @@
-# STM32F429ZIT6 - Dự án Demo Ngắt Timer 6 (Basic Timer)
 
 Dự án này thực hiện việc sử dụng **Timer 6** để tạo ra một sự kiện định kỳ (ví dụ: chớp tắt LED) mà không làm treo hệ thống. Đây là nền tảng để hiểu về cách quản lý thời gian thực trong vi điều khiển STM32. Cách sử dụng là:
 
-- Chỉ cần quan sát led **LD4 màu đỏ nhấp nháy**.
+- Chỉ cần quan sát led **LD4 màu đỏ nhấp nháy** tắt bật theo chu kì 1 giây
+
+## Video
+
+[![image](https://github.com/user-attachments/assets/1cd74521-6e69-4ed6-8ae6-8861cf1278dc)](https://youtu.be/iNICh5uWPAE)
 
 ## 1. Nguyên lý hoạt động
 
@@ -74,17 +77,18 @@ Hệ thống Timer trên STM32F429ZIT6 rất đa dạng. Việc chọn đúng Ti
 
 Trong các dự án sử dụng hệ điều hành thời gian thực (như FreeRTOS), việc quản lý Timer rất quan trọng:
 
-* **SysTick (Mặc định cho RTOS):** - Đây là một timer hệ thống nằm bên trong lõi Cortex-M4.
-    - **Nhiệm vụ:** Tạo ra nhịp đập (Tick) cho RTOS để quản lý việc chuyển đổi giữa các tác vụ (Task Switching).
+- **SysTick (Mặc định cho RTOS):** - Đây là một timer hệ thống nằm bên trong lõi Cortex-M4.
+  - **Nhiệm vụ:** Tạo ra nhịp đập (Tick) cho RTOS để quản lý việc chuyển đổi giữa các tác vụ (Task Switching).
 
-* **TIM6 (Khuyên dùng làm Timebase cho HAL):**
-    - Khi chạy FreeRTOS trên STM32, thư viện HAL của STMicroelectronics cũng cần một nguồn Tick riêng để hoạt động (cho các hàm như `HAL_Delay`, `HAL_GetTick`).
-    - **Vấn đề:** Nếu cả HAL và RTOS cùng dùng chung SysTick, sẽ dễ xảy ra xung đột mức ưu tiên ngắt (Priority).
-    - **Giải pháp:** ST khuyên người dùng chuyển **Timebase Source** của HAL sang một Timer ngoại vi khác. **TIM6** là lựa chọn tốt nhất vì:
+- **TIM6 (Khuyên dùng làm Timebase cho HAL):**
+  - Khi chạy FreeRTOS trên STM32, thư viện HAL của STMicroelectronics cũng cần một nguồn Tick riêng để hoạt động (cho các hàm như `HAL_Delay`, `HAL_GetTick`).
+  - **Vấn đề:** Nếu cả HAL và RTOS cùng dùng chung SysTick, sẽ dễ xảy ra xung đột mức ưu tiên ngắt (Priority).
+  - **Giải pháp:** ST khuyên người dùng chuyển **Timebase Source** của HAL sang một Timer ngoại vi khác. **TIM6** là lựa chọn tốt nhất vì:
         1. Nó là Basic Timer, cấu hình đơn giản.
         2. Nó không có chân xuất/nhập (IO), nên việc dùng nó làm Timebase sẽ không gây lãng phí các chân chức năng như PWM hay Encoder của các Timer khác (TIM1-TIM5).
 
 ### 3. Tóm tắt lựa chọn
+
 - Cần điều khiển động cơ mạnh mẽ: Dùng **TIM1**.
 - Cần đo thời gian cực chính xác/dài hoặc đọc Encoder: Dùng **TIM2/TIM5**.
 - Cần tạo nhịp (Tick) hỗ trợ cho RTOS hoặc HAL: Dùng **TIM6**.
